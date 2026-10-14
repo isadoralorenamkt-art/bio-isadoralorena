@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Consultoria · Isadora Lorena</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%2732%27%20fill%3D%27%23EE5A1C%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2743%27%20font-family%3D%27Arial%20Black%2CArial%2Csans-serif%27%20font-weight%3D%27900%27%20font-size%3D%2730%27%20fill%3D%27%2321160F%27%20text-anchor%3D%27middle%27%20letter-spacing%3D%27-1%27%3Eil%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#FBF6EF">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: página de venda editorial, blocos largos alternando papel e laranja, faixa inclinada como respiro */
+:root{
+  --laranja:#EE5A1C; --laranja-esc:#C8440E; --laranja-claro:#FFE3D3;
+  --papel:#FBF6EF; --areia:#F2E7DA; --tinta:#21160F; --tinta-2:#5E4C40; --linha:rgba(33,22,15,.14);
+  --f-display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --f-acento:var(--f-display);
+  --f-texto:"PP Neue Montreal", "Neue Montreal", "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--papel);color:var(--tinta);font-family:var(--f-texto);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin:0}
+em.ac{font-style:normal;font-weight:inherit;letter-spacing:inherit}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--laranja-esc)}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:14px 14px 14px 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;border:0;cursor:pointer;font-family:var(--f-texto);transition:transform .2s ease, background .2s ease}
+.btn .seta{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--papel);color:var(--tinta);font-size:17px;transition:transform .2s ease}
+.btn:hover .seta{transform:rotate(-45deg)}
+.btn-tinta{background:var(--tinta);color:var(--papel)}
+.btn-laranja{background:var(--laranja);color:#fff}
+.btn-laranja .seta{background:#fff}
+.btn-linha{background:transparent;color:var(--tinta);border:1.5px solid var(--tinta);padding:14px 24px}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
+
+/* topo */
+.topo{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
+.marca{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none}
+.marca span{color:var(--laranja)}
+.topo .btn{padding:10px 18px;font-size:14px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:stretch;padding-block:28px 56px}
+.hero-txt{display:flex;flex-direction:column;gap:22px;justify-content:center;min-width:0}
+.hero h1{font-size:clamp(42px,7vw,86px);font-weight:800}
+.hero h1 em.ac{color:var(--laranja)}
+.hero .lead{font-size:clamp(17px,1.6vw,19px);color:var(--tinta-2);max-width:52ch}
+.acoes{display:flex;flex-wrap:wrap;gap:12px}
+.cartao-preco{background:var(--laranja);color:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;position:relative;overflow:hidden;min-width:0}
+.cartao-preco::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:2px solid rgba(255,255,255,.35)}
+.cartao-preco .rot{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;opacity:.9}
+.preco{font-family:var(--f-display);font-weight:800;font-size:clamp(54px,7vw,76px);line-height:.95;letter-spacing:-.03em}
+.preco small{font-size:.32em;font-weight:600;vertical-align:top;margin-right:4px;letter-spacing:0}
+.inclui{list-style:none;margin:0;padding:0;display:grid;gap:10px;position:relative;z-index:1}
+.inclui li{display:flex;gap:10px;align-items:baseline;border-top:1px solid rgba(255,255,255,.3);padding-top:10px;font-weight:500}
+.inclui li::before{content:"✦";font-size:12px}
+
+/* faixa */
+.faixa{background:var(--tinta);color:var(--papel);transform:rotate(-2deg);margin:10px -20px 70px;overflow:hidden;white-space:nowrap;padding-block:16px}
+.faixa-trilho{display:inline-flex;gap:28px;animation:rola 32s linear infinite;font-family:var(--f-display);font-weight:600;font-size:22px}
+.faixa-trilho span:nth-child(even){color:var(--laranja)}
+@keyframes rola{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.faixa-trilho{animation:none}.btn,.btn .seta{transition:none}}
+
+section{padding-block:64px}
+.cabeca{display:flex;flex-direction:column;gap:14px;margin-bottom:36px;max-width:720px}
+.cabeca h2{font-size:clamp(32px,4.6vw,52px);font-weight:800}
+
+/* pra quem */
+.pra-quem{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.lista-sim,.lista-nao{border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.lista-sim{background:#fff;border:1px solid var(--linha)}
+.lista-nao{background:var(--areia)}
+.lista-sim h3,.lista-nao h3{font-size:22px;font-weight:600}
+.lista-sim ul,.lista-nao ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.lista-sim li,.lista-nao li{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:baseline}
+.lista-sim li::before{content:"✓";color:var(--laranja);font-weight:800}
+.lista-nao li::before{content:"✕";color:var(--tinta-2);font-weight:600}
+.lista-nao li{color:var(--tinta-2)}
+
+/* resultados */
+.bloco-laranja{background:var(--laranja);color:#fff;border-radius:36px;padding:clamp(28px,5vw,56px)}
+.bloco-laranja .eyebrow{color:var(--tinta)}
+.resultados{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.res{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.res h3{font-weight:800;font-size:34px}
+
+/* encontros */
+.encontros{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.enc{border-top:2px solid var(--tinta);padding-top:20px;display:flex;flex-direction:column;gap:14px}
+.enc .num{font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--laranja-esc);letter-spacing:.04em}
+.enc h3{font-size:28px;font-weight:600}
+.enc ul{margin:0;padding-left:20px;color:var(--tinta-2);display:grid;gap:6px}
+
+/* entregaveis */
+.entregas{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.entregas li{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:16px 18px;font-weight:500;display:flex;gap:12px;align-items:center}
+.entregas li::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--laranja);flex:none}
+
+/* sobre */
+.sobre{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:center}
+.foto{aspect-ratio:4/5;max-width:100%;border-radius:28px;background:var(--tinta);display:grid;place-items:center;position:relative;overflow:hidden}
+.foto .mono{font-family:var(--f-display);font-weight:800;letter-spacing:-.04em;font-size:120px;color:var(--laranja);line-height:1}
+.foto .selo{position:absolute;left:16px;bottom:16px;background:var(--laranja);color:#fff;border-radius:14px;padding:8px 14px;font-weight:600;font-size:14px}
+.sobre-txt{display:flex;flex-direction:column;gap:16px;max-width:60ch;min-width:0}
+.sobre-txt h2{font-size:clamp(32px,4.6vw,52px);font-weight:800}
+.sobre-txt p{color:var(--tinta-2)}
+.sobre-txt blockquote{margin:6px 0 0;font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;font-size:clamp(22px,2.8vw,30px);line-height:1.15;color:var(--tinta);border-left:3px solid var(--laranja);padding-left:18px}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:#fff;border:1px solid var(--linha);border-radius:18px;padding:0 22px}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;padding-block:18px;font-weight:600;font-size:18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-display);font-size:26px;color:var(--laranja);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-bottom:20px;color:var(--tinta-2)}
+
+/* aplicacao */
+.aplicar{background:var(--tinta);color:var(--papel);border-radius:36px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1fr 1.3fr;gap:40px}
+.aplicar .eyebrow{color:var(--laranja)}
+.aplicar h2{font-size:clamp(34px,4.6vw,56px);font-weight:800}
+.aplicar .lado{display:flex;flex-direction:column;gap:18px;min-width:0}
+.aplicar .lado p{color:rgba(251,246,239,.75)}
+form{display:grid;gap:16px;min-width:0}
+.campo{display:grid;gap:6px}
+.campo label{font-size:14px;font-weight:600}
+.campo label .opc{font-weight:400;opacity:.6}
+input,select,textarea{width:100%;font:inherit;font-size:16px;color:var(--tinta);background:var(--papel);border:2px solid transparent;border-radius:14px;padding:13px 14px}
+textarea{min-height:110px;resize:vertical}
+.campo.erro input,.campo.erro select,.campo.erro textarea{border-color:var(--laranja)}
+.msg-erro{color:#FFB08A;font-size:13px;display:none}
+.campo.erro .msg-erro{display:block}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nota{font-size:13px;color:rgba(251,246,239,.6)}
+.zap-num{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:rgba(251,246,239,.75)}
+.zap-num code{font-family:var(--f-texto);background:rgba(255,255,255,.08);padding:4px 10px;border-radius:8px;user-select:all;color:var(--papel)}
+.copiar{font:inherit;font-size:13px;background:transparent;color:var(--laranja);border:1px solid var(--laranja);border-radius:999px;padding:4px 12px;cursor:pointer}
+
+.aplicar{--q-fg:var(--papel);--q-muted:rgba(251,246,239,.7);--q-acento:var(--laranja);--q-borda:rgba(251,246,239,.22);--q-campo:rgba(255,255,255,.06)}
+.form-caixa{display:flex;flex-direction:column;gap:22px;min-width:0}
+.form-topo{display:flex;align-items:center;gap:14px}
+.form-topo .trilho{flex:1;height:4px;border-radius:4px;background:rgba(251,246,239,.15);overflow:hidden}
+.form-topo .trilho i{display:block;height:100%;width:0;background:var(--laranja);transition:width .35s ease}
+.form-topo span{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(251,246,239,.7);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fim-topo{display:flex;flex-direction:column;gap:8px}
+.fim-topo h3{font-size:clamp(26px,3.4vw,34px);font-weight:800}
+.fim-topo h3 b{color:var(--laranja)}
+.fim-topo p{color:rgba(251,246,239,.75)}
+.palco{min-height:340px;justify-content:flex-start}
+/* ===== formulário uma pergunta por tela ===== */
+.palco{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.q-tela{display:flex;flex-direction:column;gap:18px;animation:sobe .35s ease both;min-width:0}
+@keyframes sobe{from{transform:translateY(14px)}to{transform:none}}
+.q-num{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--q-acento)}
+.q-num i{font-style:normal;font-weight:600;opacity:.6}
+.q-titulo{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;text-wrap:balance;margin:0;color:var(--q-fg)}
+.q-ajuda{color:var(--q-muted);font-size:16px;margin:-6px 0 0}
+.q-in{width:100%;font:inherit;font-size:clamp(20px,3vw,26px);color:var(--q-fg);background:transparent;border:0;border-bottom:2px solid var(--q-borda);padding:10px 2px;border-radius:0;outline:none}
+.q-in::placeholder{color:var(--q-muted);opacity:.55}
+.q-in:focus{border-bottom-color:var(--q-acento)}
+textarea.q-in{min-height:120px;resize:vertical;font-size:clamp(18px,2.6vw,22px);line-height:1.4}
+.q-opcoes{display:grid;gap:10px;max-width:560px}
+.q-op{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;font-size:17px;color:var(--q-fg);background:var(--q-campo);border:1.5px solid var(--q-borda);border-radius:14px;padding:12px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.q-op:hover{border-color:var(--q-acento)}
+.q-op .k{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;border:1.5px solid var(--q-borda);font-size:13px;font-weight:600;flex:none}
+.q-op[aria-checked="true"]{background:var(--q-acento);border-color:var(--q-acento);color:#fff}
+.q-op[aria-checked="true"] .k{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.18)}
+.q-op:focus-visible,.q-btn:focus-visible,.q-volta:focus-visible,.q-zap:focus-visible{outline:3px solid var(--q-acento);outline-offset:3px}
+.q-erro{color:var(--q-acento);font-weight:600;font-size:14px;margin:0}
+.q-acoes{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+.q-btn{font:inherit;font-weight:600;font-size:16px;background:var(--q-acento);color:#fff;border:0;border-radius:999px;padding:12px 22px;cursor:pointer}
+.q-volta{font:inherit;font-size:15px;background:transparent;border:0;color:var(--q-muted);cursor:pointer;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
+.q-dica{font-size:13px;color:var(--q-muted)}
+.q-resumo{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--q-borda);max-height:300px;overflow:auto}
+.q-resumo li{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--q-borda);font-size:15px}
+.q-resumo li b{font-weight:600;color:var(--q-muted)}
+.q-resumo li span{min-width:0;overflow-wrap:anywhere}
+.q-zap{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 14px 14px 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;background:var(--q-acento);color:#fff;width:fit-content;max-width:100%}
+.q-zap span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#21160F;flex:none;transition:transform .2s}
+.q-zap:hover span{transform:rotate(-45deg)}
+.q-num-zap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--q-muted)}
+.q-num-zap code{font-family:inherit;background:var(--q-campo);padding:4px 10px;border-radius:8px;user-select:all;color:var(--q-fg)}
+.q-copiar{font:inherit;font-size:13px;background:transparent;color:var(--q-acento);border:1px solid var(--q-acento);border-radius:999px;padding:4px 12px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.q-tela{animation:none}.q-zap span,.q-op{transition:none}}
+@media (max-width:480px){.q-resumo li{grid-template-columns:1fr;gap:2px}}
+
+footer{padding-block:40px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--tinta-2);font-size:14px}
+footer a{color:var(--tinta);font-weight:600}
+
+@media (max-width:860px){
+  .hero,.pra-quem,.encontros,.aplicar,.sobre{grid-template-columns:1fr}
+  .resultados{grid-template-columns:1fr}
+  .sobre .foto{max-width:300px}
+  .topo .btn{display:none}
+}
+@media (max-width:480px){.duas{grid-template-columns:1fr}.faixa-trilho{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topo">
+    <a class="marca" href="#topo" id="topo">isadora lorena<span>.</span></a>
+    <a class="btn btn-tinta" href="#aplicar">Quero aplicar</a>
+  </header>
+
+  <div class="hero">
+    <div class="hero-txt">
+      <p class="eyebrow">Consultoria de posicionamento</p>
+      <h1>Autoridade você já tem. Falta <em class="ac">comunicar.</em></h1>
+      <p class="lead">Em dois encontros, a gente olha pro seu negócio inteiro, encontra o que está travando a sua comunicação e você sai com um plano claro do que fazer primeiro (e do que pode parar de fazer).</p>
+      <div class="acoes">
+        <a class="btn btn-laranja" href="#aplicar">Quero aplicar <span class="seta" aria-hidden="true">→</span></a>
+        <a class="btn btn-linha" href="#entregas">Ver o que você recebe</a>
+      </div>
+    </div>
+    <aside class="cartao-preco" aria-label="Resumo da consultoria">
+      <p class="rot">Investimento</p>
+      <p class="preco"><small>R$</small>497</p>
+      <ul class="inclui">
+        <li>2 encontros ao vivo, online</li>
+        <li>Plano estratégico personalizado</li>
+        <li>15 dias de conteúdo planejados</li>
+        <li>30 dias de suporte no WhatsApp</li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<div class="faixa" aria-hidden="true">
+  <div class="faixa-trilho">
+    <span>posicionamento ✦</span><span>marca pessoal ✦</span><span>percepção de valor ✦</span><span>estratégia de conteúdo ✦</span><span>clareza ✦</span><span>direção ✦</span>
+    <span>posicionamento ✦</span><span>marca pessoal ✦</span><span>percepção de valor ✦</span><span>estratégia de conteúdo ✦</span><span>clareza ✦</span><span>direção ✦</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <section aria-labelledby="t-quem" style="padding-top:0">
+    <div class="cabeca">
+      <p class="eyebrow">Pra quem é</p>
+      <h2 id="t-quem">Pra empresária que já construiu algo e não se reconhece no próprio perfil.</h2>
+    </div>
+    <div class="pra-quem">
+      <div class="lista-sim">
+        <h3>Faz sentido se você…</h3>
+        <ul>
+          <li>é boa no que faz, vive de indicação, mas não consegue explicar em uma frase por que alguém deveria escolher você.</li>
+          <li>posta quando sobra tempo e, muitas vezes, publica algo que nem representa o que queria dizer.</li>
+          <li>tem opinião sobre o seu mercado, mas trava na hora de falar de si com medo de parecer arrogante ou vendedora.</li>
+          <li>ainda é comparada pelo preço, mesmo entregando muito mais.</li>
+          <li>quer crescer e delegar o marketing, mas antes precisa saber pra onde ir.</li>
+        </ul>
+      </div>
+      <div class="lista-nao">
+        <h3>Não é pra você se…</h3>
+        <ul>
+          <li>o negócio ainda está no começo, sem uma oferta validada.</li>
+          <li>você procura só artes ou posts avulsos.</li>
+          <li>o objetivo é ganhar seguidor rápido, sem pensar na marca.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-res">
+    <div class="bloco-laranja">
+      <div class="cabeca">
+        <p class="eyebrow">O que você leva</p>
+        <h2 id="t-res">Você sai sabendo o que fazer, por que fazer e por onde começar.</h2>
+      </div>
+      <div class="resultados">
+        <div class="res"><h3>Clareza</h3><p>Entender o que está travando o crescimento da sua marca hoje.</p></div>
+        <div class="res"><h3>Direção</h3><p>Definir o seu posicionamento e as prioridades do momento.</p></div>
+        <div class="res"><h3>Execução</h3><p>Sair com um plano estratégico e 15 dias de conteúdo já planejados.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-como">
+    <div class="cabeca">
+      <p class="eyebrow">Como funciona</p>
+      <h2 id="t-como">Dois encontros. O primeiro pra entender, o segundo pra decidir.</h2>
+    </div>
+    <div class="encontros">
+      <div class="enc">
+        <p class="num">ENCONTRO 1</p>
+        <h3>Diagnóstico</h3>
+        <ul>
+          <li>Diagnóstico completo do negócio</li>
+          <li>Objetivos de curto, médio e longo prazo</li>
+          <li>Análise do cenário atual</li>
+          <li>Os principais gargalos da sua comunicação</li>
+        </ul>
+      </div>
+      <div class="enc">
+        <p class="num">ENCONTRO 2</p>
+        <h3>Plano estratégico</h3>
+        <ul>
+          <li>Apresentação do plano estratégico</li>
+          <li>O que é prioridade e por quê</li>
+          <li>Direcionamento das ações</li>
+          <li>Próximos passos definidos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="entregas" aria-labelledby="t-ent">
+    <div class="cabeca">
+      <p class="eyebrow">Entregáveis</p>
+      <h2 id="t-ent">Tudo que fica com você depois da consultoria</h2>
+    </div>
+    <ul class="entregas">
+      <li>Diagnóstico completo do negócio</li>
+      <li>Análise de posicionamento</li>
+      <li>Estudo de marca</li>
+      <li>Estudo do público</li>
+      <li>Análise SWOT</li>
+      <li>Plano estratégico personalizado</li>
+      <li>Plano de priorização</li>
+      <li>Planejamento de 15 dias de conteúdo</li>
+      <li>PDF completo</li>
+      <li>Gravação das sessões</li>
+      <li>Suporte no WhatsApp por 30 dias</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="t-sobre">
+    <div class="sobre">
+      <div class="foto" role="img" aria-label="Espaço para a foto da Isadora">
+        <span class="mono">il</span>
+        <span class="selo">estrategista de posicionamento</span>
+      </div>
+      <div class="sobre-txt">
+        <p class="eyebrow">Quem conduz</p>
+        <h2 id="t-sobre">Oi, eu sou a Isadora.</h2>
+        <p>Sou estrategista de posicionamento e profissional de marketing. Trabalho com redes sociais desde 2021 e sou graduanda em Marketing.</p>
+        <p>Por aqui, estudo o tempo todo posicionamento, comportamento e negócios, porque acredito que o conteúdo é só a pontinha do iceberg. Antes de qualquer post, vem a estratégia: como você quer ser percebida e como o seu negócio quer ser lembrado.</p>
+        <blockquote>Antes de pensar no que postar, você precisa saber pelo que quer ser lembrada.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-faq">
+    <div class="cabeca">
+      <p class="eyebrow">Dúvidas</p>
+      <h2 id="t-faq">O que costumam me perguntar</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Funciona pra minha área?</summary><p>Se você vende um serviço e já tem um negócio rodando, sim. O diagnóstico parte da sua realidade, então o plano é montado pra sua área e pro seu momento, e não a partir de um modelo pronto.</p></details>
+      <details><summary>E se eu não tiver tempo pra aplicar?</summary><p>O plano já sai priorizado: você sabe o que fazer primeiro e o que pode esperar. Os 15 dias de conteúdo também já vêm planejados, pra você não começar do zero.</p></details>
+      <details><summary>Já investi em marketing e não deu em nada. Por que seria diferente?</summary><p>Faz sentido desconfiar. Aqui a gente começa pela estratégia, antes de qualquer post. Você entende o porquê de cada decisão e sai com um plano conectado ao seu negócio, e não só com um feed bonito.</p></details>
+      <details><summary>Os encontros ficam gravados?</summary><p>Sim. Você recebe a gravação das sessões e um PDF completo com tudo o que foi construído.</p></details>
+      <details><summary>Como funciona o suporte?</summary><p>Durante 30 dias, você pode tirar dúvidas comigo pelo WhatsApp enquanto coloca o plano em prática.</p></details>
+    </div>
+  </section>
+
+  <section id="aplicar" aria-labelledby="t-apl">
+    <div class="aplicar">
+      <div class="lado">
+        <p class="eyebrow">Aplicação</p>
+        <h2 id="t-apl">Vamos ver se faz sentido pra você?</h2>
+        <p>Uma pergunta por vez, leva uns 3 minutinhos. No final, o WhatsApp abre com as suas respostas prontas e é só enviar que eu te respondo por lá 🧡</p>
+      </div>
+      <div class="form-caixa">
+        <div class="form-topo" aria-hidden="true"><div class="trilho"><i id="barra"></i></div><span id="contador"></span></div>
+        <div class="palco" id="palco" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>Isadora Lorena · estrategista de posicionamento</span>
+  <a href="https://www.instagram.com/isalorenac/" target="_blank" rel="noopener">@isalorenac</a>
+</footer>
+
+<script>
+/* Formulário uma pergunta por tela + registro de quem começa e desiste.
+   ENDPOINT: URL do Google Apps Script (planilha). Vazio = não registra, só envia pro WhatsApp. */
+function iniciarFormulario(cfg){
+  var P=cfg.perguntas, N=P.length, NUM='558592815789';
+  var palco=cfg.palco, LS='form-'+cfg.chave;
+  function novoId(){try{return crypto.randomUUID()}catch(e){return 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)}}
+  var st={i:cfg.intro?-1:0,r:{},id:novoId(),inicio:new Date().toISOString(),comecou:false,enviado:false};
+  try{var s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.id&&!s.enviado&&s.r)st=s;}catch(e){}
+  function salvar(){try{localStorage.setItem(LS,JSON.stringify(st))}catch(e){}}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function nome1(){return ((st.r.nome||'').trim().split(/\s+/)[0])||''}
+  function titulo(q){var t=q.titulo.replace(/\{nome\}/g,nome1());return t.replace(/^,\s*/,'')}
+  function valor(q){var v=st.r[q.id];return Array.isArray(v)?v.join(', '):(v||'')}
+  function respondidas(){return P.filter(function(q){return valor(q)!==''}).length}
+
+  function registrar(status){
+    if(!cfg.endpoint||!st.comecou)return;
+    var d={id:st.id,formulario:cfg.nomeForm,status:status,respondidas:respondidas(),total:N,
+      parou_em:(st.i>=0&&st.i<N)?P[st.i].rotulo:'final',inicio:st.inicio,atualizado:new Date().toISOString()};
+    P.forEach(function(q){d[q.rotulo]=valor(q)});
+    var corpo=JSON.stringify(d);
+    try{if(navigator.sendBeacon&&navigator.sendBeacon(cfg.endpoint,new Blob([corpo],{type:'text/plain;charset=utf-8'})))return}catch(e){}
+    try{fetch(cfg.endpoint,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:corpo}).catch(function(){})}catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'&&st.i<N&&!st.enviado)registrar('desistiu ou saiu')});
+
+  function progresso(){
+    var f=st.i<0?0:Math.min(st.i,N)/N;
+    if(cfg.barra)cfg.barra.style.width=(f*100)+'%';
+    if(cfg.contador)cfg.contador.textContent=st.i<0?'':(st.i>=N?'revisão':(st.i+1)+' de '+N);
+  }
+  function msgZap(){
+    var t=cfg.msgTitulo+'\n';
+    P.forEach(function(q){var v=valor(q);if(v)t+='\n*'+q.rotulo+':* '+v});
+    return 'https://wa.me/'+NUM+'?text='+encodeURIComponent(t);
+  }
+
+  function render(){
+    salvar();progresso();
+    if(st.i<0){palco.innerHTML=cfg.intro;var b=palco.querySelector('[data-comecar]');if(b){b.onclick=function(){st.i=0;render()};b.focus({preventScroll:true})}return}
+    if(st.i>=N){return final()}
+    var q=P[st.i],v=st.r[q.id],h='';
+    h+='<div class="q-tela"><p class="q-num">'+(st.i+1)+' <i>→</i></p>';
+    h+='<h2 class="q-titulo" id="q-t">'+esc(titulo(q))+(q.obrigatoria?'':' <span class="q-dica">(opcional)</span>')+'</h2>';
+    if(q.ajuda)h+='<p class="q-ajuda">'+esc(q.ajuda)+'</p>';
+    if(q.tipo==='escolha'||q.tipo==='multipla'){
+      h+='<div class="q-opcoes" role="'+(q.tipo==='escolha'?'radiogroup':'group')+'" aria-labelledby="q-t">';
+      q.opcoes.forEach(function(o,k){
+        var on=q.tipo==='escolha'?v===o:(Array.isArray(v)&&v.indexOf(o)>-1);
+        h+='<button type="button" class="q-op" role="'+(q.tipo==='escolha'?'radio':'checkbox')+'" aria-checked="'+on+'" data-op="'+esc(o)+'"><span class="k">'+String.fromCharCode(65+k)+'</span>'+esc(o)+'</button>';
+      });
+      h+='</div>';
+    }else if(q.tipo==='textarea'){
+      h+='<textarea class="q-in" id="q-in" aria-labelledby="q-t" placeholder="'+esc(q.placeholder||'Escreva aqui…')+'">'+esc(v||'')+'</textarea>';
+    }else{
+      h+='<input class="q-in" id="q-in" aria-labelledby="q-t" type="'+(q.tipo==='tel'?'tel':q.tipo==='email'?'email':'text')+'" autocomplete="'+(q.auto||'off')+'" placeholder="'+esc(q.placeholder||'Escreva aqui…')+'" value="'+esc(v||'')+'">';
+    }
+    h+='<p class="q-erro" id="q-erro" hidden></p>';
+    h+='<div class="q-acoes">';
+    if(st.i>0||cfg.intro)h+='<button type="button" class="q-volta" id="q-volta">Voltar</button>';
+    h+='<button type="button" class="q-btn" id="q-ok">'+(st.i===N-1?'Revisar respostas':'Continuar')+'</button>';
+    h+='<span class="q-dica">'+(q.tipo==='textarea'?'Enter continua · Shift+Enter quebra linha':q.tipo==='escolha'?'ou aperte a letra':'ou aperte Enter ↵')+'</span></div></div>';
+    palco.innerHTML=h;
+
+    var inp=palco.querySelector('#q-in');
+    if(inp){inp.focus({preventScroll:true});inp.addEventListener('input',function(){st.r[q.id]=inp.value;salvar()});
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();avancar()}})}
+    palco.querySelectorAll('.q-op').forEach(function(b){b.addEventListener('click',function(){escolher(q,b.getAttribute('data-op'))})});
+    var p1=palco.querySelector('.q-op');if(p1&&!inp)p1.focus({preventScroll:true});
+    palco.querySelector('#q-ok').onclick=avancar;
+    var vb=palco.querySelector('#q-volta');if(vb)vb.onclick=function(){st.i--;render()};
+    if(cfg.aoMudar)cfg.aoMudar();
+  }
+  function escolher(q,o){
+    if(q.tipo==='escolha'){st.r[q.id]=o;salvar();marcar(q);setTimeout(avancar,220)}
+    else{var a=Array.isArray(st.r[q.id])?st.r[q.id].slice():[];var k=a.indexOf(o);if(k>-1)a.splice(k,1);else a.push(o);st.r[q.id]=a;salvar();marcar(q)}
+  }
+  function marcar(q){var v=st.r[q.id];palco.querySelectorAll('.q-op').forEach(function(b){var o=b.getAttribute('data-op');b.setAttribute('aria-checked',q.tipo==='escolha'?String(v===o):String(Array.isArray(v)&&v.indexOf(o)>-1))});var e=palco.querySelector('#q-erro');if(e)e.hidden=true}
+  document.addEventListener('keydown',function(e){
+    if(st.i<0||st.i>=N)return;var q=P[st.i];if(q.tipo!=='escolha'&&q.tipo!=='multipla')return;
+    if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
+    if(e.key==='Enter'){if(!(e.target&&e.target.classList&&e.target.classList.contains('q-op'))){e.preventDefault();avancar()}return}
+    var k=e.key.toUpperCase().charCodeAt(0)-65;if(e.key.length===1&&k>=0&&k<q.opcoes.length){e.preventDefault();escolher(q,q.opcoes[k])}
+  });
+  function erro(t){var e=palco.querySelector('#q-erro');e.textContent=t;e.hidden=false}
+  function avancar(){
+    if(st.i<0||st.i>=N)return;
+    var q=P[st.i],v=valor(q).trim();
+    if(q.obrigatoria&&!v)return erro(q.tipo==='multipla'?'Marca pelo menos uma opção.':q.tipo==='escolha'?'Escolhe uma opção.':'Essa aqui é importante, responde rapidinho.');
+    if(v&&q.tipo==='tel'&&v.replace(/\D/g,'').length<10)return erro('Confere o número com DDD, por favor.');
+    if(v&&q.tipo==='email'&&!/^\S+@\S+\.\S+$/.test(v))return erro('Esse e-mail parece incompleto.');
+    if(typeof st.r[q.id]==='string')st.r[q.id]=st.r[q.id].trim();
+    var primeira=!st.comecou;st.comecou=true;st.i++;
+    registrar(st.i>=N?'chegou ao fim':(primeira?'começou':'em andamento'));
+    render();
+  }
+  function final(){
+    var h='<div class="q-tela">'+cfg.finalTopo;
+    h+='<ul class="q-resumo">';P.forEach(function(q){var v=valor(q);if(v)h+='<li><b>'+esc(q.rotulo)+'</b><span>'+esc(v)+'</span></li>'});h+='</ul>';
+    h+='<a class="q-zap" id="q-zap" href="'+msgZap()+'" target="_blank" rel="noopener">Enviar pelo WhatsApp <span aria-hidden="true">→</span></a>';
+    h+='<p class="q-ajuda" id="q-pos" hidden>Abriu o WhatsApp? Então é só tocar em enviar por lá 🧡</p>';
+    h+='<div class="q-num-zap">Se não abrir, me chama no <code id="q-numero">(85) 9281-5789</code> <button type="button" class="q-copiar" id="q-copiar">copiar</button></div>';
+    h+='<div class="q-acoes"><button type="button" class="q-volta" id="q-volta">Voltar e ajustar</button></div></div>';
+    palco.innerHTML=h;
+    palco.querySelector('#q-zap').addEventListener('click',function(){registrar('enviou no WhatsApp');st.enviado=true;salvar();palco.querySelector('#q-pos').hidden=false});
+    palco.querySelector('#q-volta').onclick=function(){st.i=N-1;st.enviado=false;render()};
+    palco.querySelector('#q-copiar').onclick=function(){var b=this;function sel(){var r=document.createRange();r.selectNodeContents(palco.querySelector('#q-numero'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+      try{navigator.clipboard.writeText('+55 85 9281-5789').then(function(){b.textContent='copiado';setTimeout(function(){b.textContent='copiar'},1800)},sel)}catch(e){sel()}};
+    if(cfg.aoMudar)cfg.aoMudar();
+  }
+  render();
+}
+
+var ENDPOINT='';
+iniciarFormulario({
+  chave:'consultoria', nomeForm:'Consultoria', endpoint:ENDPOINT,
+  palco:document.getElementById('palco'), barra:document.getElementById('barra'), contador:document.getElementById('contador'),
+  msgTitulo:'Oi, Isadora! Quero aplicar pra *Consultoria de Posicionamento* 🧡',
+  finalTopo:'<div class="fim-topo"><h3>Prontinho. Agora é só <b>enviar.</b></h3><p>Confere suas respostas. O botão abre o WhatsApp com tudo pronto.</p></div>',
+  perguntas:[
+    {id:'nome',rotulo:'Nome',tipo:'texto',auto:'name',obrigatoria:true,titulo:'Pra começar, qual é o seu nome?'},
+    {id:'zap',rotulo:'WhatsApp',tipo:'tel',auto:'tel',obrigatoria:true,titulo:'{nome}, qual é o seu WhatsApp?',ajuda:'Com DDD.',placeholder:'(85) 90000-0000'},
+    {id:'insta',rotulo:'Instagram',tipo:'texto',obrigatoria:true,titulo:'Qual é o @ do seu Instagram?',placeholder:'@seuperfil'},
+    {id:'area',rotulo:'Negócio',tipo:'texto',obrigatoria:true,titulo:'Qual é o seu negócio ou área de atuação?',placeholder:'Ex: clínica de harmonização, escritório de arquitetura'},
+    {id:'tempo',rotulo:'Tempo de negócio',tipo:'escolha',obrigatoria:true,titulo:'Há quanto tempo o negócio existe?',opcoes:['Menos de 1 ano','De 1 a 3 anos','De 3 a 5 anos','Mais de 5 anos']},
+    {id:'fat',rotulo:'Faturamento mensal',tipo:'escolha',obrigatoria:true,titulo:'Qual é o faturamento mensal?',ajuda:'Fica só entre a gente.',opcoes:['Até R$ 5 mil','De R$ 5 a 10 mil','De R$ 10 a 20 mil','De R$ 20 a 50 mil','Acima de R$ 50 mil']},
+    {id:'dor',rotulo:'O que mais incomoda',tipo:'textarea',obrigatoria:true,titulo:'O que mais te incomoda hoje na sua comunicação?'},
+    {id:'agora',rotulo:'Por que agora',tipo:'texto',obrigatoria:false,titulo:'Última! Por que agora?'}
+  ]
+});
+</script>
+</body>
+</html>

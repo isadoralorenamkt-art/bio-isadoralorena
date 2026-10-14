@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aplicação · Stance</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%2732%27%20fill%3D%27%23EE5A1C%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2743%27%20font-family%3D%27Arial%20Black%2CArial%2Csans-serif%27%20font-weight%3D%27900%27%20font-size%3D%2730%27%20fill%3D%27%2321160F%27%20text-anchor%3D%27middle%27%20letter-spacing%3D%27-1%27%3Eil%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#FBF6EF">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: uma tela por pergunta; barra fina de progresso no topo, pergunta centralizada à esquerda, faixa laranja na lateral no desktop */
+:root{
+  --laranja:#EE5A1C; --laranja-esc:#C8440E;
+  --papel:#FBF6EF; --areia:#F2E7DA; --tinta:#21160F; --tinta-2:#5E4C40; --linha:rgba(33,22,15,.16);
+  --f-display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --f-texto:"PP Neue Montreal", "Neue Montreal", "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --q-fg:var(--tinta); --q-muted:var(--tinta-2); --q-acento:var(--laranja); --q-borda:var(--linha); --q-campo:#fff;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--papel);color:var(--tinta);font-family:var(--f-texto);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+p{margin:0}
+.app{min-height:100%;display:grid;grid-template-columns:1fr minmax(0,300px)}
+.coluna{display:flex;flex-direction:column;min-width:0;padding-inline:clamp(20px,6vw,72px)}
+.topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:22px 14px}
+.marca{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--tinta)}
+.marca span{color:var(--laranja)}
+.contador{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-2);font-variant-numeric:tabular-nums}
+.trilho{height:4px;background:var(--areia);border-radius:4px;overflow:hidden}
+.trilho i{display:block;height:100%;width:0;background:var(--laranja);transition:width .35s ease}
+.palco{flex:1;padding-block:clamp(32px,8vh,80px);max-width:680px}
+.rodape{padding-block:18px 26px;font-size:13px;color:var(--tinta-2);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rodape a{color:var(--tinta);font-weight:600}
+.lateral{background:var(--laranja);color:#fff;padding:32px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
+.lateral::after{content:"";position:absolute;left:-80px;bottom:-80px;width:240px;height:240px;border-radius:50%;border:2px solid rgba(255,255,255,.35)}
+.lateral .rot{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--tinta)}
+.lateral blockquote{margin:0;font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.1;letter-spacing:-.01em;position:relative;z-index:1}
+.lateral p{font-size:15px;opacity:.92;position:relative;z-index:1}
+/* intro */
+.intro{display:flex;flex-direction:column;gap:20px;animation:sobe .35s ease both}
+.intro .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--laranja-esc)}
+.intro h1{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(40px,6.5vw,68px);line-height:1;letter-spacing:-.025em;text-wrap:balance}
+.intro h1 b{color:var(--laranja)}
+.intro p{color:var(--tinta-2);max-width:50ch;font-size:18px}
+.intro .linha{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.comecar{font:inherit;font-weight:600;font-size:17px;background:var(--tinta);color:var(--papel);border:0;border-radius:999px;padding:14px 14px 14px 26px;display:inline-flex;align-items:center;gap:12px;cursor:pointer}
+.comecar span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--laranja);color:#fff}
+.comecar:focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
+.intro small{font-size:14px;color:var(--tinta-2)}
+.fim-topo{display:flex;flex-direction:column;gap:10px}
+.fim-topo h2{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(30px,4.6vw,44px);line-height:1.05;letter-spacing:-.02em}
+.fim-topo h2 b{color:var(--laranja)}
+.fim-topo p{color:var(--tinta-2)}
+@media (max-width:860px){.app{grid-template-columns:1fr}.lateral{display:none}}
+@media (prefers-reduced-motion:reduce){.trilho i,.intro{transition:none;animation:none}}
+/* ===== formulário uma pergunta por tela ===== */
+.palco{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.q-tela{display:flex;flex-direction:column;gap:18px;animation:sobe .35s ease both;min-width:0}
+@keyframes sobe{from{transform:translateY(14px)}to{transform:none}}
+.q-num{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--q-acento)}
+.q-num i{font-style:normal;font-weight:600;opacity:.6}
+.q-titulo{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;text-wrap:balance;margin:0;color:var(--q-fg)}
+.q-ajuda{color:var(--q-muted);font-size:16px;margin:-6px 0 0}
+.q-in{width:100%;font:inherit;font-size:clamp(20px,3vw,26px);color:var(--q-fg);background:transparent;border:0;border-bottom:2px solid var(--q-borda);padding:10px 2px;border-radius:0;outline:none}
+.q-in::placeholder{color:var(--q-muted);opacity:.55}
+.q-in:focus{border-bottom-color:var(--q-acento)}
+textarea.q-in{min-height:120px;resize:vertical;font-size:clamp(18px,2.6vw,22px);line-height:1.4}
+.q-opcoes{display:grid;gap:10px;max-width:560px}
+.q-op{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;font-size:17px;color:var(--q-fg);background:var(--q-campo);border:1.5px solid var(--q-borda);border-radius:14px;padding:12px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.q-op:hover{border-color:var(--q-acento)}
+.q-op .k{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;border:1.5px solid var(--q-borda);font-size:13px;font-weight:600;flex:none}
+.q-op[aria-checked="true"]{background:var(--q-acento);border-color:var(--q-acento);color:#fff}
+.q-op[aria-checked="true"] .k{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.18)}
+.q-op:focus-visible,.q-btn:focus-visible,.q-volta:focus-visible,.q-zap:focus-visible{outline:3px solid var(--q-acento);outline-offset:3px}
+.q-erro{color:var(--q-acento);font-weight:600;font-size:14px;margin:0}
+.q-acoes{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+.q-btn{font:inherit;font-weight:600;font-size:16px;background:var(--q-acento);color:#fff;border:0;border-radius:999px;padding:12px 22px;cursor:pointer}
+.q-volta{font:inherit;font-size:15px;background:transparent;border:0;color:var(--q-muted);cursor:pointer;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
+.q-dica{font-size:13px;color:var(--q-muted)}
+.q-resumo{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--q-borda);max-height:300px;overflow:auto}
+.q-resumo li{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--q-borda);font-size:15px}
+.q-resumo li b{font-weight:600;color:var(--q-muted)}
+.q-resumo li span{min-width:0;overflow-wrap:anywhere}
+.q-zap{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 14px 14px 24px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;background:var(--q-acento);color:#fff;width:fit-content;max-width:100%}
+.q-zap span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#21160F;flex:none;transition:transform .2s}
+.q-zap:hover span{transform:rotate(-45deg)}
+.q-num-zap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--q-muted)}
+.q-num-zap code{font-family:inherit;background:var(--q-campo);padding:4px 10px;border-radius:8px;user-select:all;color:var(--q-fg)}
+.q-copiar{font:inherit;font-size:13px;background:transparent;color:var(--q-acento);border:1px solid var(--q-acento);border-radius:999px;padding:4px 12px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.q-tela{animation:none}.q-zap span,.q-op{transition:none}}
+@media (max-width:480px){.q-resumo li{grid-template-columns:1fr;gap:2px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="coluna">
+    <header>
+      <div class="topo">
+        <a class="marca" href="https://www.instagram.com/isalorenac/" target="_blank" rel="noopener">stance<span>.</span></a>
+        <span class="contador" id="contador" aria-live="polite"></span>
+      </div>
+      <div class="trilho" aria-hidden="true"><i id="barra"></i></div>
+    </header>
+    <main class="palco" id="palco" aria-live="polite"></main>
+    <footer class="rodape"><span>Stance · agência boutique</span><a href="https://www.instagram.com/isalorenac/" target="_blank" rel="noopener">@isalorenac</a></footer>
+  </div>
+  <aside class="lateral" aria-hidden="true">
+    <p class="rot">Stance · agência boutique</p>
+    <blockquote>Antes de pensar no que postar, você precisa saber pelo que quer ser lembrada.</blockquote>
+    <p>Estratégia, conteúdo e copy com a sua voz. Poucas marcas por vez.</p>
+  </aside>
+</div>
+
+<script>
+/* Formulário uma pergunta por tela + registro de quem começa e desiste.
+   ENDPOINT: URL do Google Apps Script (planilha). Vazio = não registra, só envia pro WhatsApp. */
+function iniciarFormulario(cfg){
+  var P=cfg.perguntas, N=P.length, NUM='558592815789';
+  var palco=cfg.palco, LS='form-'+cfg.chave;
+  function novoId(){try{return crypto.randomUUID()}catch(e){return 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)}}
+  var st={i:cfg.intro?-1:0,r:{},id:novoId(),inicio:new Date().toISOString(),comecou:false,enviado:false};
+  try{var s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.id&&!s.enviado&&s.r)st=s;}catch(e){}
+  function salvar(){try{localStorage.setItem(LS,JSON.stringify(st))}catch(e){}}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function nome1(){return ((st.r.nome||'').trim().split(/\s+/)[0])||''}
+  function titulo(q){var t=q.titulo.replace(/\{nome\}/g,nome1());return t.replace(/^,\s*/,'')}
+  function valor(q){var v=st.r[q.id];return Array.isArray(v)?v.join(', '):(v||'')}
+  function respondidas(){return P.filter(function(q){return valor(q)!==''}).length}
+
+  function registrar(status){
+    if(!cfg.endpoint||!st.comecou)return;
+    var d={id:st.id,formulario:cfg.nomeForm,status:status,respondidas:respondidas(),total:N,
+      parou_em:(st.i>=0&&st.i<N)?P[st.i].rotulo:'final',inicio:st.inicio,atualizado:new Date().toISOString()};
+    P.forEach(function(q){d[q.rotulo]=valor(q)});
+    var corpo=JSON.stringify(d);
+    try{if(navigator.sendBeacon&&navigator.sendBeacon(cfg.endpoint,new Blob([corpo],{type:'text/plain;charset=utf-8'})))return}catch(e){}
+    try{fetch(cfg.endpoint,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:corpo}).catch(function(){})}catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'&&st.i<N&&!st.enviado)registrar('desistiu ou saiu')});
+
+  function progresso(){
+    var f=st.i<0?0:Math.min(st.i,N)/N;
+    if(cfg.barra)cfg.barra.style.width=(f*100)+'%';
+    if(cfg.contador)cfg.contador.textContent=st.i<0?'':(st.i>=N?'revisão':(st.i+1)+' de '+N);
+  }
+  function msgZap(){
+    var t=cfg.msgTitulo+'\n';
+    P.forEach(function(q){var v=valor(q);if(v)t+='\n*'+q.rotulo+':* '+v});
+    return 'https://wa.me/'+NUM+'?text='+encodeURIComponent(t);
+  }
+
+  function render(){
+    salvar();progresso();
+    if(st.i<0){palco.innerHTML=cfg.intro;var b=palco.querySelector('[data-comecar]');if(b){b.onclick=function(){st.i=0;render()};b.focus({preventScroll:true})}return}
+    if(st.i>=N){return final()}
+    var q=P[st.i],v=st.r[q.id],h='';
+    h+='<div class="q-tela"><p class="q-num">'+(st.i+1)+' <i>→</i></p>';
+    h+='<h2 class="q-titulo" id="q-t">'+esc(titulo(q))+(q.obrigatoria?'':' <span class="q-dica">(opcional)</span>')+'</h2>';
+    if(q.ajuda)h+='<p class="q-ajuda">'+esc(q.ajuda)+'</p>';
+    if(q.tipo==='escolha'||q.tipo==='multipla'){
+      h+='<div class="q-opcoes" role="'+(q.tipo==='escolha'?'radiogroup':'group')+'" aria-labelledby="q-t">';
+      q.opcoes.forEach(function(o,k){
+        var on=q.tipo==='escolha'?v===o:(Array.isArray(v)&&v.indexOf(o)>-1);
+        h+='<button type="button" class="q-op" role="'+(q.tipo==='escolha'?'radio':'checkbox')+'" aria-checked="'+on+'" data-op="'+esc(o)+'"><span class="k">'+String.fromCharCode(65+k)+'</span>'+esc(o)+'</button>';
+      });
+      h+='</div>';
+    }else if(q.tipo==='textarea'){
+      h+='<textarea class="q-in" id="q-in" aria-labelledby="q-t" placeholder="'+esc(q.placeholder||'Escreva aqui…')+'">'+esc(v||'')+'</textarea>';
+    }else{
+      h+='<input class="q-in" id="q-in" aria-labelledby="q-t" type="'+(q.tipo==='tel'?'tel':q.tipo==='email'?'email':'text')+'" autocomplete="'+(q.auto||'off')+'" placeholder="'+esc(q.placeholder||'Escreva aqui…')+'" value="'+esc(v||'')+'">';
+    }
+    h+='<p class="q-erro" id="q-erro" hidden></p>';
+    h+='<div class="q-acoes">';
+    if(st.i>0||cfg.intro)h+='<button type="button" class="q-volta" id="q-volta">Voltar</button>';
+    h+='<button type="button" class="q-btn" id="q-ok">'+(st.i===N-1?'Revisar respostas':'Continuar')+'</button>';
+    h+='<span class="q-dica">'+(q.tipo==='textarea'?'Enter continua · Shift+Enter quebra linha':q.tipo==='escolha'?'ou aperte a letra':'ou aperte Enter ↵')+'</span></div></div>';
+    palco.innerHTML=h;
+
+    var inp=palco.querySelector('#q-in');
+    if(inp){inp.focus({preventScroll:true});inp.addEventListener('input',function(){st.r[q.id]=inp.value;salvar()});
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();avancar()}})}
+    palco.querySelectorAll('.q-op').forEach(function(b){b.addEventListener('click',function(){escolher(q,b.getAttribute('data-op'))})});
+    var p1=palco.querySelector('.q-op');if(p1&&!inp)p1.focus({preventScroll:true});
+    palco.querySelector('#q-ok').onclick=avancar;
+    var vb=palco.querySelector('#q-volta');if(vb)vb.onclick=function(){st.i--;render()};
+    if(cfg.aoMudar)cfg.aoMudar();
+  }
+  function escolher(q,o){
+    if(q.tipo==='escolha'){st.r[q.id]=o;salvar();marcar(q);setTimeout(avancar,220)}
+    else{var a=Array.isArray(st.r[q.id])?st.r[q.id].slice():[];var k=a.indexOf(o);if(k>-1)a.splice(k,1);else a.push(o);st.r[q.id]=a;salvar();marcar(q)}
+  }
+  function marcar(q){var v=st.r[q.id];palco.querySelectorAll('.q-op').forEach(function(b){var o=b.getAttribute('data-op');b.setAttribute('aria-checked',q.tipo==='escolha'?String(v===o):String(Array.isArray(v)&&v.indexOf(o)>-1))});var e=palco.querySelector('#q-erro');if(e)e.hidden=true}
+  document.addEventListener('keydown',function(e){
+    if(st.i<0||st.i>=N)return;var q=P[st.i];if(q.tipo!=='escolha'&&q.tipo!=='multipla')return;
+    if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
+    if(e.key==='Enter'){if(!(e.target&&e.target.classList&&e.target.classList.contains('q-op'))){e.preventDefault();avancar()}return}
+    var k=e.key.toUpperCase().charCodeAt(0)-65;if(e.key.length===1&&k>=0&&k<q.opcoes.length){e.preventDefault();escolher(q,q.opcoes[k])}
+  });
+  function erro(t){var e=palco.querySelector('#q-erro');e.textContent=t;e.hidden=false}
+  function avancar(){
+    if(st.i<0||st.i>=N)return;
+    var q=P[st.i],v=valor(q).trim();
+    if(q.obrigatoria&&!v)return erro(q.tipo==='multipla'?'Marca pelo menos uma opção.':q.tipo==='escolha'?'Escolhe uma opção.':'Essa aqui é importante, responde rapidinho.');
+    if(v&&q.tipo==='tel'&&v.replace(/\D/g,'').length<10)return erro('Confere o número com DDD, por favor.');
+    if(v&&q.tipo==='email'&&!/^\S+@\S+\.\S+$/.test(v))return erro('Esse e-mail parece incompleto.');
+    if(typeof st.r[q.id]==='string')st.r[q.id]=st.r[q.id].trim();
+    var primeira=!st.comecou;st.comecou=true;st.i++;
+    registrar(st.i>=N?'chegou ao fim':(primeira?'começou':'em andamento'));
+    render();
+  }
+  function final(){
+    var h='<div class="q-tela">'+cfg.finalTopo;
+    h+='<ul class="q-resumo">';P.forEach(function(q){var v=valor(q);if(v)h+='<li><b>'+esc(q.rotulo)+'</b><span>'+esc(v)+'</span></li>'});h+='</ul>';
+    h+='<a class="q-zap" id="q-zap" href="'+msgZap()+'" target="_blank" rel="noopener">Enviar pelo WhatsApp <span aria-hidden="true">→</span></a>';
+    h+='<p class="q-ajuda" id="q-pos" hidden>Abriu o WhatsApp? Então é só tocar em enviar por lá 🧡</p>';
+    h+='<div class="q-num-zap">Se não abrir, chama a gente no <code id="q-numero">(85) 9281-5789</code> <button type="button" class="q-copiar" id="q-copiar">copiar</button></div>';
+    h+='<div class="q-acoes"><button type="button" class="q-volta" id="q-volta">Voltar e ajustar</button></div></div>';
+    palco.innerHTML=h;
+    palco.querySelector('#q-zap').addEventListener('click',function(){registrar('enviou no WhatsApp');st.enviado=true;salvar();palco.querySelector('#q-pos').hidden=false});
+    palco.querySelector('#q-volta').onclick=function(){st.i=N-1;st.enviado=false;render()};
+    palco.querySelector('#q-copiar').onclick=function(){var b=this;function sel(){var r=document.createRange();r.selectNodeContents(palco.querySelector('#q-numero'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+      try{navigator.clipboard.writeText('+55 85 9281-5789').then(function(){b.textContent='copiado';setTimeout(function(){b.textContent='copiar'},1800)},sel)}catch(e){sel()}};
+    if(cfg.aoMudar)cfg.aoMudar();
+  }
+  render();
+}
+
+var ENDPOINT='';
+iniciarFormulario({
+  chave:'gerenciamento', nomeForm:'Gerenciamento', endpoint:ENDPOINT,
+  palco:document.getElementById('palco'), barra:document.getElementById('barra'), contador:document.getElementById('contador'),
+  msgTitulo:'Oi, Stance! Quero aplicar pro *Gerenciamento* 🧡',
+  intro:'<div class="intro"><p class="eyebrow">Aplicação · Gerenciamento Stance</p><h1>Vamos cuidar da sua marca <b>juntas?</b></h1><p>Na Stance, a gente trabalha com poucas marcas por vez, pra cada uma ter estratégia de verdade. Essas perguntas ajudam o nosso time a entender o seu momento antes da conversa.</p><div class="linha"><button type="button" class="comecar" data-comecar>Começar <span aria-hidden="true">→</span></button><small>16 perguntas · uns 5 minutinhos</small></div></div>',
+  finalTopo:'<div class="fim-topo"><h2>Prontinho. Agora é só <b>enviar.</b></h2><p>Confere suas respostas. O botão abre o WhatsApp com tudo pronto, e o nosso time lê com calma e te chama pra conversar.</p></div>',
+  perguntas:[
+    {id:'nome',rotulo:'Nome',tipo:'texto',auto:'name',obrigatoria:true,titulo:'Pra começar, qual é o seu nome?'},
+    {id:'zap',rotulo:'WhatsApp',tipo:'tel',auto:'tel',obrigatoria:true,titulo:'{nome}, qual é o seu WhatsApp?',ajuda:'Com DDD. É por lá que a gente vai te chamar.',placeholder:'(85) 90000-0000'},
+    {id:'insta',rotulo:'Instagram',tipo:'texto',obrigatoria:true,titulo:'Qual é o @ do seu Instagram?',placeholder:'@seuperfil'},
+    {id:'email',rotulo:'E-mail',tipo:'email',auto:'email',obrigatoria:false,titulo:'E o seu e-mail?',placeholder:'voce@email.com'},
+    {id:'negocio',rotulo:'Negócio',tipo:'texto',obrigatoria:true,titulo:'Qual é o nome do seu negócio e o que você vende?',placeholder:'Ex: Studio X, harmonização orofacial'},
+    {id:'tempo',rotulo:'Tempo de negócio',tipo:'escolha',obrigatoria:true,titulo:'Há quanto tempo ele existe?',opcoes:['Menos de 1 ano','De 1 a 3 anos','De 3 a 5 anos','Mais de 5 anos']},
+    {id:'fat',rotulo:'Faturamento mensal',tipo:'escolha',obrigatoria:true,titulo:'Qual é o faturamento mensal médio?',ajuda:'Fica só entre a gente.',opcoes:['Até R$ 10 mil','De R$ 10 a 20 mil','De R$ 20 a 50 mil','De R$ 50 a 100 mil','Acima de R$ 100 mil']},
+    {id:'equipe',rotulo:'Equipe',tipo:'escolha',obrigatoria:true,titulo:'Quantas pessoas trabalham com você?',opcoes:['Só eu','2 a 5','6 a 15','Mais de 15']},
+    {id:'quem',rotulo:'Quem cuida do marketing',tipo:'escolha',obrigatoria:true,titulo:'Quem cuida do seu marketing hoje?',opcoes:['Eu mesma','Alguém da equipe','Freelancer ou agência','Ninguém']},
+    {id:'inc',rotulo:'O que incomoda',tipo:'multipla',obrigatoria:true,titulo:'O que mais te incomoda na sua comunicação hoje?',ajuda:'Pode marcar mais de uma.',opcoes:['Não me reconheço no meu perfil','Não tenho tempo pra postar','Posto sem estratégia','Não sei explicar meu diferencial','Sou comparada pelo preço','O conteúdo não traz cliente','Travo pra aparecer e falar de mim']},
+    {id:'antes',rotulo:'Investimento anterior',tipo:'textarea',obrigatoria:false,titulo:'Você já investiu em marketing antes? Como foi?'},
+    {id:'objetivo',rotulo:'Objetivo 6 meses',tipo:'textarea',obrigatoria:true,titulo:'Qual é o seu principal objetivo pros próximos 6 meses?',placeholder:'Ex: ser referência na minha cidade, aumentar o ticket, abrir uma nova unidade'},
+    {id:'percebida',rotulo:'Como quer ser percebida',tipo:'texto',obrigatoria:false,titulo:'Como você quer ser percebida por quem te acompanha?'},
+    {id:'invest',rotulo:'Investimento mensal',tipo:'escolha',obrigatoria:true,titulo:'Quanto você pretende investir em marketing por mês?',opcoes:['Até R$ 1.500','De R$ 1.500 a 2.500','De R$ 2.500 a 4.000','Acima de R$ 4.000']},
+    {id:'inicio',rotulo:'Quando quer começar',tipo:'escolha',obrigatoria:true,titulo:'Quando você quer começar?',opcoes:['Agora','Nos próximos 30 dias','Em 2 ou 3 meses','Ainda estou pesquisando']},
+    {id:'origem',rotulo:'Como conheceu a Stance',tipo:'escolha',obrigatoria:false,titulo:'Última! Como você conheceu a Stance?',opcoes:['Instagram','Indicação','TikTok','Outro']}
+  ]
+});
+</script>
+</body>
+</html>
